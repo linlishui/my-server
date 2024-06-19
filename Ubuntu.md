@@ -1,11 +1,11 @@
 
 
-### 环境准备
+### 一、环境简介
 
 - CPU硬件：n100
 - 系统版本：Ubuntu 20.04
 
-### 开机自启
+### 二、开机自启
 
 Linux系统开机启动顺序：
 1. 加载BIOS（Basic Input Output System，基本输入输出系统）
@@ -47,56 +47,56 @@ rc-local.service 是系统自带的一个开机自启服务， 但是在 Ubuntu2
 
 1. 开启 rc-local.service
 
-	在`/usr/lib/systemd/system/rc-local.service`文件中添加以下内容：
-	```bash
-	[Install]
-	WantedBy=multi-user.target
-	Alias=rc-local.service
-	```
+在`/usr/lib/systemd/system/rc-local.service`文件中添加以下内容：
+```bash
+[Install]
+WantedBy=multi-user.target
+Alias=rc-local.service
+```
 
-	此时完整的rc-local.service样例如下
+此时完整的rc-local.service样例如下
 
-	```bash
-	[Unit]
-	Description=/etc/rc.local Compatibility
-	Documentation=man:systemd-rc-local-generator(8)
-	ConditionFileIsExecutable=/etc/rc.local
-	After=network.target
+```bash
+[Unit]
+Description=/etc/rc.local Compatibility
+Documentation=man:systemd-rc-local-generator(8)
+ConditionFileIsExecutable=/etc/rc.local
+After=network.target
 
-	[Service]
-	Type=forking
-	ExecStart=/etc/rc.local start
-	TimeoutSec=0
-	RemainAfterExit=yes
-	GuessMainPID=no
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+RemainAfterExit=yes
+GuessMainPID=no
 
-	[Install]
-	WantedBy=multi-user.target
-	Alias=rc-local.service
-	```
+[Install]
+WantedBy=multi-user.target
+Alias=rc-local.service
+```
 
 2. `[可选]`提高 rc-local.service 启动优先级
 
-	迁移到etc相关目录：`mv /usr/lib/systemd/system/rc-local.service /etc/systemd/system/`
+迁移到etc相关目录：`mv /usr/lib/systemd/system/rc-local.service /etc/systemd/system/`
 
 3. 新建 rc.local 文件
 
-	ubuntu20.04的 /etc 目录默认是没有 `rc.local` 文件，可新建一个。
-	```bash
-	touch /etc/rc.local
+ubuntu20.04的 /etc 目录默认是没有 `rc.local` 文件，可新建一个。
+```bash
+touch /etc/rc.local
 
-	chmod 755 /etc/rc.local
+chmod 755 /etc/rc.local
 
-	```
+```
 
 4. rc.local 文件启动样例
 
-	这里以开机启动nexus为例，样例内容如下：
-	```bash
-	#!/bin/bash
+这里以开机启动nexus为例，样例内容如下：
+```bash
+#!/bin/bash
 
-	# 通过xxx用户来启动nexus服务
-	runuser -l xxx -c '/home/xxx/library/nexus-3.68.1-02/bin/nexus start'
-  
- 	exit 0
-	```
+# 通过xxx用户来启动nexus服务
+runuser -l xxx -c '/home/xxx/library/nexus-3.68.1-02/bin/nexus start'
+
+	exit 0
+```

@@ -1,3 +1,3 @@
 
 
-- [Ubuntu配置](./Ubuntu.md)
+1. [Ubuntu配置](./Ubuntu.md)
