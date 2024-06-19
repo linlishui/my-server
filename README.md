@@ -1,1 +1,3 @@
-# my-server
+
+
+- [Ubuntu配置](./Ubuntu.md)
